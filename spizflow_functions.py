@@ -43,6 +43,7 @@ def OneHot(label_data, num_class):
     return np.identity(num_class)[label_data]
 
 def Loss_Cross_Entropy(pred_y, true_y, batch_size):
+    """loss"""
     return -np.sum(t * np.log(output_layer.y + 1e-8)) / batch_size
 
 def Loss_RMSE(pred_y, true_y):
