@@ -1,6 +1,35 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from time import time as stamp
+from abc import ABC, abstractmethod
+
+def Initialization(layer_type, activation_type, weight_shape):
+    """Initializing weight and bias"""
+    relu_form = ['linear','relu','leakey_relu','elu','prelu']
+    curve_form = ['sigmoid','tanh','softmax']
+    
+    if layer_type[1] == 'dense' and activation_type in curve_form:
+        W = np.random.randn(*weight_shape) * np.sqrt(1.0 / weight_shape[1])
+        b = np.random.randn(weight_shape[1])
+        
+    elif layer_type[1] == 'dense' and activation_type in relu_form:
+        W = np.random.randn(*weight_shape) * np.sqrt(2.0 / weight_shape[1])
+        b = np.random.randn(weight_shape[1])
+        
+    elif layer_type[1] == 'conv2d' and activation_type in curve_form:
+        init_in = weight_shape[1]*weight_shape[2]*weight_shape[3]
+        W = np.random.randn(*weight_shape) * np.sqrt(1.0 / init_in)
+        b = np.random.randn(1, weight_shape[0]) * 0.1
+
+    elif layer_type[1] == 'conv2d' and activation_type in relu_form:
+        init_in = weight_shape[1]*weight_shape[2]*weight_shape[3]
+        W = np.random.randn(*weight_shape) * np.sqrt(2.0 / init_in)
+        b = np.random.randn(1, weight_shape[0]) * 0.1
+    
+    else:
+        raise Exception("Can't initializing")
+    return W, b
 
 def im2col(image, flt_h, flt_w, padding=0, stride=1):
     """Image to column convertor"""
@@ -43,7 +72,6 @@ def OneHot(label_data, num_class):
     return np.identity(num_class)[label_data]
 
 def Loss_Cross_Entropy(pred_y, true_y, batch_size):
-    """loss"""
     return -np.sum(t * np.log(output_layer.y + 1e-8)) / batch_size
 
 def Loss_RMSE(pred_y, true_y):

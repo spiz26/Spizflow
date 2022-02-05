@@ -29,22 +29,17 @@ class Dense(Layer):
     """Dense Layer"""
     def __init__(self, pre_neurons, neurons, activation='relu',
                  optimizer='Adam', name=None):
-        self.W = np.random.randn(pre_neurons, neurons) * np.sqrt(1.0 / neurons)
-        self.b = np.random.randn(neurons)
-        self.params = {'Weight' : self.W, 'bias' : self.b}
-        self.grads = {}
-        
         self.name = name
         self.type = ('layer','dense')
         
-        self.activation_dict = {'sigmoid' : Sigmoid(),
-                                'relu' : ReLU(),
+        self.activation_dict = {'linear' : Linear(),
+                                'sigmoid' : Sigmoid(),
+                                'tanh' : tanh(),
                                 'softmax' : Softmax(),
-                                'linear' : Linear(),
-                                'elu' : ELU(),
+                                'relu' : ReLU(),
                                 'leakey_relu' : Leaky_ReLU(),
-                                'prelu' : PReLU(),
-                                'tanh' : tanh()}
+                                'elu' : ELU(),
+                                'prelu' : PReLU()}
         
         self.optimizer_dict = {'SGD' : SGD(),
                                'Momentum' : Momentum(),
@@ -54,6 +49,10 @@ class Dense(Layer):
         
         self.activation = self.activation_dict[activation]
         self.optimizer = self.optimizer_dict[optimizer]
+        
+        self.W, self.b = Initialization(self.type, activation, (pre_neurons, neurons))
+        self.params = {'Weight' : self.W, 'bias' : self.b}
+        self.grads = {}
         
     def forward(self, x):
         self.x = x
@@ -83,9 +82,9 @@ class Dense(Layer):
 class Dropout(Layer):
     """Dropout layer"""
     def __init__(self, dropout_ratio, name=None):
-        self.dropout_ratio = dropout_ratio
         self.name = name
         self.type = ('layer','dropout')
+        self.dropout_ratio = dropout_ratio
         
     def forward(self, x, is_train):
         if is_train:
@@ -119,39 +118,22 @@ class FCLayer(Layer):
     def backprop(self, dy):
         self.dx = dy.reshape(*self.x.shape)
         return self.dx
-    
+
 class Conv2D(Layer):
     """Convolution Layer"""
     def __init__(self, x_shape, flt_shape, padding=0, stride=1, activation='relu',
                  optimizer='Adagrad', name=None):
-        wb_width = 0.1
-        self.x_shape = x_shape
-        self.x_ch, self.x_h, self.x_w = x_shape
-        self.num_flt, self.flt_h, self.flt_w = flt_shape
-        
-        self.W = wb_width * np.random.randn(self.num_flt, self.x_ch, self.flt_h, self.flt_w)
-        self.b = wb_width * np.random.randn(1, self.num_flt)
-        self.params = {'Weight' : self.W, 'bias' : self.b}
-        self.grads = {}
-        
-        self.stride = stride
-        self.padding = padding
-        
-        self.y_ch = self.num_flt 
-        self.y_h = (self.x_h - self.flt_h + 2*self.padding) // self.stride + 1
-        self.y_w = (self.x_w - self.flt_w + 2*self.padding) // self.stride + 1
-        
         self.name = name
-        self.type = ('layer','conv')
-        
-        self.activation_dict = {'sigmoid' : Sigmoid(),
-                                'relu' : ReLU(),
+        self.type = ('layer','conv2d')
+
+        self.activation_dict = {'linear' : Linear(),
+                                'sigmoid' : Sigmoid(),
+                                'tanh' : tanh(),
                                 'softmax' : Softmax(),
-                                'linear' : Linear(),
-                                'elu' : ELU(),
+                                'relu' : ReLU(),
                                 'leakey_relu' : Leaky_ReLU(),
-                                'prelu' : PReLU(),
-                                'tanh' : tanh()}
+                                'elu' : ELU(),
+                                'prelu' : PReLU()}
         
         self.optimizer_dict = {'SGD' : SGD(),
                                'Momentum' : Momentum(),
@@ -162,6 +144,23 @@ class Conv2D(Layer):
         self.activation = self.activation_dict[activation]
         self.optimizer = self.optimizer_dict[optimizer]
 
+        self.x_shape = x_shape
+        self.x_ch, self.x_h, self.x_w = x_shape
+        self.num_flt, self.flt_h, self.flt_w = flt_shape
+
+        self.W, self.b = Initialization(self.type, activation,
+                                       (self.num_flt, self.x_ch, self.flt_h, self.flt_w))
+                
+        self.params = {'Weight' : self.W, 'bias' : self.b}
+        self.grads = {}
+        
+        self.stride = stride
+        self.padding = padding
+        
+        self.y_ch = self.num_flt 
+        self.y_h = (self.x_h - self.flt_h + 2*self.padding) // self.stride + 1
+        self.y_w = (self.x_w - self.flt_w + 2*self.padding) // self.stride + 1
+        
     def forward(self, x):
         self.num_batch = x.shape[0]
         
@@ -203,14 +202,14 @@ class Conv2D(Layer):
 class Pooling(Layer):
     """Pooling Layer"""
     def __init__(self, x_shape, pool, padding=0, name=None):
+        self.name = name
+        self.type = ('layer','pool')
+        
         self.x_shape = x_shape
         self.x_ch, self.x_h, self.x_w = x_shape
         self.pool = pool
         self.padding = padding
-        
-        self.name = name
-        self.type = ('layer','pool')
-        
+
         self.y_ch = self.x_ch
         self.y_h = self.x_h // pool if self.x_h % pool==0 else self.x_h // pool+1
         self.y_w = self.x_w // pool if self.x_w % pool==0 else self.x_w // pool+1
