@@ -8,7 +8,7 @@ Spizflow ver.2.4
 3. Activation function : Linear, Sigmoid, tanh, Softmax, ReLU, leakey relu, ELU, PReLU
 4. Model Class
 5. Initialization : Xavier, He
-
+6. Loss visualization
 
 
 ver.2.3 accuracy
