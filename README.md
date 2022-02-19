@@ -10,10 +10,10 @@ Spizflow ver.2.4
 5. Initialization : Xavier, He
 6. Loss visualization
 
-ver.2.2 : CNN update. adding Convolution, Fully connected, pooling layers.
-ver.2.3 : adding some Activation functions(Linear, tanh, leaky relu, ELU, PReLU).
-ver.2.4 : adding Initialization.
-ver.2.5 : adding Loss visualization.
+ver.2.2 : CNN update. adding Convolution, Fully connected, pooling layers.  
+ver.2.3 : adding some Activation functions(Linear, tanh, leaky relu, ELU, PReLU).  
+ver.2.4 : adding Initialization.  
+ver.2.5 : adding Loss visualization.  
 
 ver.2.3 accuracy
 
