@@ -254,6 +254,8 @@ class Model:
     def __init__(self, name=None):
         self.name = name
         self.LayerList = []
+        self.train_loss = []
+        self.test_loss = []
         
     def add(self, layer):
         """Layer adding method"""
@@ -319,13 +321,15 @@ class Model:
         
         predict_y1 = self._forward(X_train, False)
         count_train = np.sum(np.argmax(predict_y1, axis=1) == np.argmax(y_train, axis=1))
-
+        self.train_loss.append(Loss_Cross_Entropy(predict_y1, y_train, num_train))
+        
         predict_y2 = self._forward(X_test, False)
         count_test = np.sum(np.argmax(predict_y2, axis=1) == np.argmax(y_test, axis=1))
-
-        print(f"Train Accuracy : {round(count_train/num_train*100,3)}%,",
-              f"Test Accuracy : {round(count_test/num_test*100,3)}%")
-
+        self.test_loss.append(Loss_Cross_Entropy(predict_y2, y_test, num_test))
+        
+        print(f"Train Accuracy : {round(count_train / num_train*100,3)}%,",
+              f"Test Accuracy : {round(count_test / num_test*100,3)}%")
+        
     def predict(self, x):
         """Predict method"""
         return self._forward(x, False)
@@ -336,3 +340,22 @@ class Model:
             if layer.type != 'Drop':
                 self.total_parameters += layer.W.size + layer.b.size
         return self.total_parameters
+    
+    def print_loss(self):
+        fig = plt.figure(figsize=(12,5))
+        
+        ax1 = fig.add_subplot(121)
+        x = np.arange(0, len(self.train_loss))
+        y_train = self.train_loss
+        ax1.set_title("Train set loss", size = 15)
+        plt.xlabel("epochs")
+        plt.plot(x, y_train)
+        
+        ax2 = fig.add_subplot(122)
+        y_test = self.test_loss
+        ax2.set_title("Test set loss", size = 15)
+        plt.xlabel("epochs")
+        plt.plot(x, y_test)
+        
+        print(f"Train Loss : {round(self.train_loss[-1],3)},",
+              f"Test Loss : {round(self.test_loss[-1],3)}")
