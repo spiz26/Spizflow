@@ -1,7 +1,7 @@
 # Spizflow
 Machine learning, Deep learning implementation
 
-Spizflow ver.2.4
+Spizflow the latest ver.2.5
 
 1. Layer : Dense, Dropout, Convolution, Fully Connected, pooling
 2. Optimizer : SGD, Momentum, AdaGrad, RMSProp, Adam
