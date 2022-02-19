@@ -12,7 +12,7 @@ Spizflow the latest ver.2.5
 
 ver.1.0 : Basic deep learning code implement.  
 ver.1.1 : I don't remember. Perhaps there were only SGD, sigmoid.  
-ver.1.2 : Adding Adagrad, ReLU. 
+ver.1.2 : Adding Adagrad, ReLU.  
 ver.1.3 : Adding dropout layer.  
   
 ver.2.0 : Organize the code neatly using the class. POP -> OOP.  
