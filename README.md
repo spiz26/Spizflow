@@ -1,6 +1,6 @@
 # Spizflow
 Machine learning, Deep learning implementation  
-It's a code that I implemented myself. 
+It's a code that I implemented myself.  
 Spizflow the latest ver.2.5
 
 1. Layer : Dense, Dropout, Convolution, Fully Connected, pooling
