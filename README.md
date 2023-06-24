@@ -14,13 +14,14 @@ ver.1.0 : Basic deep learning code implement.
 ver.1.1 : I don't remember. Perhaps there were only SGD, sigmoid.  
 ver.1.2 : Adding Adagrad, ReLU.  
 ver.1.3 : Adding dropout layer.  
-  
+
 ver.2.0 : Organize the code neatly using the class. POP -> OOP.  
 ver.2.1 : Adding mini batch, some Optimizers.   
 ver.2.2 : CNN update. Adding Convolution, Fully connected, pooling layers.  
 ver.2.3 : Adding some Activation functions(Linear, tanh, leaky relu, ELU, PReLU).  
 ver.2.4 : Adding Initialization.  
 ver.2.5 : Adding Loss visualization.  
+ver.2.6 : Adding Numerical differentiation and using zero bias initialization
 
 ver.2.3 accuracy
 
