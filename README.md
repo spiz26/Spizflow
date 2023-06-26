@@ -56,3 +56,20 @@ ver.2.4 accuracy
 [10/10 epochs] Train Accuracy : 98.725%, Test Accuracy : 94.4%
 Training complete! 2.0minutes, 55.77seconds
 ```
+
+ver.2.6 accuracy
+
+```
+[0/10 epochs] Train Accuracy : 9.75%, Test Accuracy : 10.4%
+[1/10 epochs] Train Accuracy : 93.45%, Test Accuracy : 89.8%
+[2/10 epochs] Train Accuracy : 96.975%, Test Accuracy : 92.5%
+[3/10 epochs] Train Accuracy : 97.95%, Test Accuracy : 93.5%
+[4/10 epochs] Train Accuracy : 97.575%, Test Accuracy : 92.4%
+[5/10 epochs] Train Accuracy : 98.075%, Test Accuracy : 93.3%
+[6/10 epochs] Train Accuracy : 96.975%, Test Accuracy : 91.3%
+[7/10 epochs] Train Accuracy : 98.275%, Test Accuracy : 93.3%
+[8/10 epochs] Train Accuracy : 98.775%, Test Accuracy : 93.5%
+[9/10 epochs] Train Accuracy : 99.125%, Test Accuracy : 93.8%
+[10/10 epochs] Train Accuracy : 99.0%, Test Accuracy : 94.3%
+Training complete! 1.0minutes, 28.54seconds
+```
